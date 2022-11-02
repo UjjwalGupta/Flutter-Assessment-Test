@@ -65,9 +65,9 @@ class EodCompanies extends StatelessWidget {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildParticipantSearchBox(),
+                    _buildSearchField(),
                     _eodViewModel.companyData.isNotEmpty
-                        ? _buildStatementList()
+                        ? _buildList()
                         : Container(
                             alignment: Alignment.center,
                             height: _numericConstant.currentDeviceHeight / 2,
@@ -82,16 +82,24 @@ class EodCompanies extends StatelessWidget {
     ]);
   }
 
-  Widget _buildStatementList() {
+  Widget _buildList() {
     return Container(
-      height: NumericConstant.currentDeviceHeight / 2-30,
-      decoration: commonWidget.circleDecorationBottom(_appColors.whiteColor),
+      height: _numericConstant.currentDeviceHeight / 2-30,
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          // border: Border.all(
+          //   color: color,
+          // ),
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+          )),
       child: ListView.builder(
           controller: _controller,
-          itemCount: _statementViewModel.statementItems.length,
+          itemCount: _eodViewModel.companyData.length,
           itemBuilder: (buildContext, index) {
             return _buildStatementItem(
-                index, _statementViewModel.statementItems[index]);
+                index,_eodViewModel.companyData[index]);
           }),
     );
   }
@@ -99,161 +107,117 @@ class EodCompanies extends StatelessWidget {
   Widget _buildStatementItem(int index, Data data) {
     return Container(
       color: index % 2 != 0
-          ? _appColors.whiteColor
-          : _appColors.claimsItemBackgroundColor,
+          ? Colors.white38
+          : Colors.black12,
       padding: const EdgeInsets.only(top: 10, left: 30, right: 30, bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: const EdgeInsets.only(top: 10),
             child: Row(
               children: [
-                Expanded(
+                const Expanded(
                     flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        _strings.statementId, _appColors.spentColor,
-                        textSize: NumericConstant.fontSize9)),
-                Expanded(
+                    child: Text('Open')),
+               Expanded(
                     flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        items.statementRef!, _appColors.forgotPassTextColor,
-                        textSize: NumericConstant.fontSize9)),
+                    child: Text(data.open!.toString())),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: const EdgeInsets.only(top: 10),
             child: Row(
               children: [
-                Expanded(
+                const Expanded(
                     flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        _strings.planId, _appColors.spentColor,
-                        textSize: NumericConstant.fontSize9)),
-                Expanded(
+                    child: Text('High')),
+               Expanded(
                     flex: 1,
-                    child: InkWell(
-                      onTap: () {
-                        Get.to(() => BudgetReport(), arguments: [
-                          {_strings.planId: items.planId},
-                        ]);
-                      },
-                      child: commonWidget.montserratSemiBoldText(
-                          items.planNdisRef!, _appColors.forgotPassTextColor,
-                          textSize: NumericConstant.fontSize9),
-                    )),
+                    child: Text(data.high!.toString())),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: const EdgeInsets.only(top: 10),
             child: Row(
               children: [
-                Expanded(
+                const Expanded(
                     flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        _strings.participant, _appColors.spentColor,
-                        textSize: NumericConstant.fontSize9)),
-                Expanded(
+                    child: Text('Low')),
+               Expanded(
                     flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        items.participantName!, _appColors.ashColor,
-                        textSize: NumericConstant.fontSize9)),
+                    child: Text(data.low!.toString())),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: const EdgeInsets.only(top: 10),
             child: Row(
               children: [
-                Expanded(
+                const Expanded(
                     flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        _strings.month, _appColors.spentColor,
-                        textSize: NumericConstant.fontSize9)),
-                Expanded(
+                    child: Text('Close')),
+               Expanded(
                     flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        items.monthLabel!, _appColors.ashColor,
-                        textSize: NumericConstant.fontSize9)),
+                    child: Text(data.close!.toString())),
               ],
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+            padding: const EdgeInsets.only(top: 10),
             child: Row(
               children: [
-                Expanded(
+                const Expanded(
                     flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        _strings.planStartDate, _appColors.spentColor,
-                        textSize: NumericConstant.fontSize9)),
-                Expanded(
+                    child: Text('Volume')),
+               Expanded(
                     flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
+                    child: Text(data.volume!.toString())),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              children: [
+                const Expanded(
+                    flex: 1,
+                    child: Text('Symbol')),
+               Expanded(
+                    flex: 1,
+                    child: Text(data.symbol!.toString())),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              children: [
+                const Expanded(
+                    flex: 1,
+                    child: Text('Exchange')),
+               Expanded(
+                    flex: 1,
+                    child: Text(data.exchange!.toString())),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Row(
+              children: [
+                const Expanded(
+                    flex: 1,
+                    child: Text('Date')),
+               Expanded(
+                    flex: 1,
+                    child: Text(
                         _strings.outputFormat2.format(_strings.inputFormat
-                            .parse(_utility.convertDateToString(
-                                DateTime.parse(items.startDate!)))),
-                        _appColors.ashColor,
-                        textSize: NumericConstant.fontSize9)),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        _strings.period, _appColors.spentColor,
-                        textSize: NumericConstant.fontSize9)),
-                Expanded(
-                    flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        items.period!, _appColors.ashColor,
-                        textSize: NumericConstant.fontSize9)),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        _strings.sentAt, _appColors.spentColor,
-                        textSize: NumericConstant.fontSize9)),
-                Expanded(
-                    flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        items.sentAt != null
-                            ? _strings.outputFormat5.format(_strings.inputFormat
-                                .parse(_utility.convertDateToString(
-                                    DateTime.parse(items.sentAt!))))
-                            : '--',
-                        _appColors.ashColor,
-                        textSize: NumericConstant.fontSize9)),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Row(
-              children: [
-                Expanded(
-                    flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        _strings.status, _appColors.spentColor,
-                        textSize: NumericConstant.fontSize9)),
-                Expanded(
-                    flex: 1,
-                    child: commonWidget.montserratSemiBoldText(
-                        items.virtualStatus!, _appColors.ashColor,
-                        textSize: NumericConstant.fontSize9)),
+                            .parse(_utility.convertDateToString(DateTime.parse(data.date!.toString())))))
+                    ),
               ],
             ),
           ),
@@ -262,43 +226,43 @@ class EodCompanies extends StatelessWidget {
     );
   }
 
-  Widget _buildFromToDateField() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 1,
-          child: Container(
-            alignment: Alignment.centerRight,
-            child: _buildSearchDropdown(
-                _statementViewModel
-                    .statementSearchOptions.data!.monthFromOptions!,
-                _strings.monthFrom,
-                _strings.monthFrom,
-                false),
-          ),
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          flex: 1,
-          child: Container(
-            alignment: Alignment.centerRight,
-            child: _buildSearchDropdown(
-                _statementViewModel
-                    .statementSearchOptions.data!.monthToOptions!,
-                _strings.monthTo,
-                _strings.monthTo,
-                false),
-          ),
-        ),
-      ],
-    )
-        // )
-        ;
-  }
+  // Widget _buildFromToDateField() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.start,
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Expanded(
+  //         flex: 1,
+  //         child: Container(
+  //           alignment: Alignment.centerRight,
+  //           child: _buildSearchDropdown(
+  //               _statementViewModel
+  //                   .statementSearchOptions.data!.monthFromOptions!,
+  //               _strings.monthFrom,
+  //               _strings.monthFrom,
+  //               false),
+  //         ),
+  //       ),
+  //       const SizedBox(
+  //         width: 10,
+  //       ),
+  //       Expanded(
+  //         flex: 1,
+  //         child: Container(
+  //           alignment: Alignment.centerRight,
+  //           child: _buildSearchDropdown(
+  //               _statementViewModel
+  //                   .statementSearchOptions.data!.monthToOptions!,
+  //               _strings.monthTo,
+  //               _strings.monthTo,
+  //               false),
+  //         ),
+  //       ),
+  //     ],
+  //   )
+  //       // )
+  //       ;
+  // }
 
   Widget _buildSearchField() {
     return Container(
@@ -307,49 +271,50 @@ class EodCompanies extends StatelessWidget {
       margin: const EdgeInsets.only(top: 20),
       child: SizedBox(
         height: _numericConstant.searchBoxHeight,
-        child: TextFormField(.defaultController,
+        child: TextFormField(
             onChanged: (value) {
-              if (fieldName == _strings.invoiceNumber) {
-                _claimsViewModel.invoiceNumberController.text = (value);
-                _claimsViewModel.invoiceNumberController.selection =
-                    TextSelection.collapsed(
-                        offset: _claimsViewModel
-                            .invoiceNumberController.text.length);
-              } else if (fieldName == _strings.planId) {
-                _claimsViewModel.planIdFilterController.text = (value);
-                _claimsViewModel.planIdFilterController.selection =
-                    TextSelection.collapsed(
-                        offset: _claimsViewModel
-                            .planIdFilterController.text.length);
-              } else if (fieldName == _strings.planIdSearch) {
-                _claimsViewModel.planIdSearchController.text = (value);
-                _claimsViewModel.planIdSearchController.selection =
-                    TextSelection.collapsed(
-                        offset: _claimsViewModel
-                            .planIdSearchController.text.length);
-              } else if (fieldName == _strings.beneficiary) {
-                _claimsViewModel.beneficiaryFilterController.text = (value);
-                _claimsViewModel.beneficiaryFilterController.selection =
-                    TextSelection.collapsed(
-                        offset: _claimsViewModel
-                            .beneficiaryFilterController.text.length);
-              } else if (fieldName == _strings.provider) {
-                _claimsViewModel.providerFilterController.text = (value);
-                _claimsViewModel.providerFilterController.selection =
-                    TextSelection.collapsed(
-                        offset: _claimsViewModel
-                            .providerFilterController.text.length);
-              }
+              // if (fieldName == _strings.invoiceNumber) {
+              //   _claimsViewModel.invoiceNumberController.text = (value);
+              //   _claimsViewModel.invoiceNumberController.selection =
+              //       TextSelection.collapsed(
+              //           offset: _claimsViewModel
+              //               .invoiceNumberController.text.length);
+              // } else if (fieldName == _strings.planId) {
+              //   _claimsViewModel.planIdFilterController.text = (value);
+              //   _claimsViewModel.planIdFilterController.selection =
+              //       TextSelection.collapsed(
+              //           offset: _claimsViewModel
+              //               .planIdFilterController.text.length);
+              // } else if (fieldName == _strings.planIdSearch) {
+              //   _claimsViewModel.planIdSearchController.text = (value);
+              //   _claimsViewModel.planIdSearchController.selection =
+              //       TextSelection.collapsed(
+              //           offset: _claimsViewModel
+              //               .planIdSearchController.text.length);
+              // } else if (fieldName == _strings.beneficiary) {
+              //   _claimsViewModel.beneficiaryFilterController.text = (value);
+              //   _claimsViewModel.beneficiaryFilterController.selection =
+              //       TextSelection.collapsed(
+              //           offset: _claimsViewModel
+              //               .beneficiaryFilterController.text.length);
+              // } else if (fieldName == _strings.provider) {
+              //   _claimsViewModel.providerFilterController.text = (value);
+              //   _claimsViewModel.providerFilterController.selection =
+              //       TextSelection.collapsed(
+              //           offset: _claimsViewModel
+              //               .providerFilterController.text.length);
+              // }
             },
-            decoration: _uiHelper.getSearchInputDecorationStyle(
-                fieldName == _strings.planIdSearch
-                    ? _strings.planId
-                    : fieldName,
-                _strings.empty,
-                NumericConstant.fontSize12,
-                _strings.fontMontserrat,
-                FontStyle.normal,
-                FontWeight.normal)),
+            // decoration: _uiHelper.getSearchInputDecorationStyle(
+            //     fieldName == _strings.planIdSearch
+            //         ? _strings.planId
+            //         : fieldName,
+            //     _strings.empty,
+            //     NumericConstant.fontSize12,
+            //     _strings.fontMontserrat,
+            //     FontStyle.normal,
+            //     FontWeight.normal)
+        ),
       ),
     );
   }
