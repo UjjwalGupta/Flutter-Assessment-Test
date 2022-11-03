@@ -38,7 +38,6 @@ dependencies:
   get: ^4.6.5
   http: ^0.13.5
   intl: ^0.17.0
-  simple_autocomplete_formfield: ^0.3.0
   calendar_date_picker2: ^0.2.5
   internet_connection_checker: ^1.0.0+1
   fluttertoast: ^8.0.9

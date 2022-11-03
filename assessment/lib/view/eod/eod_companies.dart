@@ -4,7 +4,6 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
 import '../../constants/colors.dart';
 import '../../constants/numeric_constant.dart';
 import '../../constants/strings.dart';
