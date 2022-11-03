@@ -58,14 +58,14 @@ class Data {
   double? high;
   double? low;
   double? close;
-  int? volume;
+  double? volume;
   double? adjHigh;
   double? adjLow;
   double? adjClose;
   double? adjOpen;
   double? adjVolume;
-  int? splitFactor;
-  int? dividend;
+  double? splitFactor;
+  double? dividend;
   String? symbol;
   String? exchange;
   String? date;
